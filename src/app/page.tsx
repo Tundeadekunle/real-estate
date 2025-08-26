@@ -1,816 +1,6 @@
 
 
-// "use client";
-// import { useState, useEffect, useRef } from "react";
-// import Image from "next/image";
-// import { Menu, X } from "lucide-react";
-// import { motion } from "framer-motion";
 
-// export default function Home() {
-//   const [menuOpen, setMenuOpen] = useState(false);
-//   const [dropdownOpen, setDropdownOpen] = useState(false);
-//   const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
-//   const [currentSlide, setCurrentSlide] = useState(0);
-//   const dropdownRef = useRef<HTMLDivElement>(null);
-//   const slideInterval = useRef<NodeJS.Timeout>();
-
-//   const slides = [
-//     {
-//       src: "/house2.jpg",
-//       alt: "Luxury Home",
-//     },
-//     {
-//       src: "/house6.jpg",
-//       alt: "Modern Villa",
-//     },
-//     {
-//       src: "/house3.jpg",
-//       alt: "Country House",
-//     },
-//   ];
-
-//   // Close dropdown when clicking outside
-//   useEffect(() => {
-//     const handleClickOutside = (event: MouseEvent) => {
-//       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-//         setDropdownOpen(false);
-//       }
-//     };
-
-//     document.addEventListener("mousedown", handleClickOutside);
-//     return () => {
-//       document.removeEventListener("mousedown", handleClickOutside);
-//     };
-//   }, []);
-
-//   // Auto slide functionality
-//   useEffect(() => {
-//     const startSlideShow = () => {
-//       slideInterval.current = setInterval(() => {
-//         setCurrentSlide((prev) => (prev + 1) % slides.length);
-//       }, 5000);
-//     };
-
-//     const stopSlideShow = () => {
-//       if (slideInterval.current) {
-//         clearInterval(slideInterval.current);
-//       }
-//     };
-
-//     startSlideShow();
-
-//     // Clean up on component unmount
-//     return () => stopSlideShow();
-//   }, [slides.length]);
-
-//   const goToSlide = (index: number) => {
-//     setCurrentSlide(index);
-//   };
-
-//   const goToNextSlide = () => {
-//     setCurrentSlide((prev) => (prev + 1) % slides.length);
-//   };
-
-//   const goToPrevSlide = () => {
-//     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-//   };
-
-//   return (
-//     <div>
-//       {/* Sticky Navbar */}
-//       <header className="sticky top-0 z-50 flex items-center justify-between px-8 py-4 shadow-sm bg-white">
-//         {/* Logo */}
-//         <div className="flex items-center gap-2">
-//           <span className="text-2xl font-bold text-blue-900">🏠 ACEEstate</span>
-//         </div>
-
-//         {/* Desktop Nav */}
-//         <nav className="hidden md:flex gap-6 text-gray-700 relative">
-//           <a href="/" className="hover:text-blue-600 transition-colors">Home</a>
-//           <a href="/about" className="hover:text-blue-600 transition-colors">About</a>
-          
-//           {/* Properties Dropdown */}
-//           <div 
-//             className="relative" 
-//             ref={dropdownRef}
-//             onMouseEnter={() => setDropdownOpen(true)}
-//             onMouseLeave={() => setDropdownOpen(false)}
-//           >
-//             <button 
-//               className="flex items-center hover:text-green-600 focus:outline-none cursor-pointer select-none transition-colors"
-//               onClick={() => setDropdownOpen(!dropdownOpen)}
-//             >
-//               Properties
-//               <svg 
-//                 className={`w-4 h-4 ml-1 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} 
-//                 fill="none" 
-//                 stroke="currentColor" 
-//                 strokeWidth="2" 
-//                 viewBox="0 0 24 24"
-//               >
-//                 <path d="M19 9l-7 7-7-7" />
-//               </svg>
-//             </button>
-            
-//             {dropdownOpen && (
-//               <div 
-//                 className="absolute left-0 top-full w-48 bg-white shadow-lg rounded-md py-2 z-50 border border-gray-200"
-//                 onMouseEnter={() => setDropdownOpen(true)}
-//                 onMouseLeave={() => setDropdownOpen(false)}
-//               >
-//                 <a
-//                   href="/properties/housing"
-//                   className="block px-4 py-2 hover:bg-blue-50 text-gray-700 transition-colors"
-//                   onClick={() => setDropdownOpen(false)}
-//                 >
-//                   Housing
-//                 </a>
-//                 <a
-//                   href="/properties/lands"
-//                   className="block px-4 py-2 hover:bg-blue-50 text-gray-700 transition-colors"
-//                   onClick={() => setDropdownOpen(false)}
-//                 >
-//                   Lands
-//                 </a>
-//               </div>
-//             )}
-//           </div>
-
-//           <a href="/contact" className="hover:text-blue-600 transition-colors">Contact</a>
-//         </nav>
-
-//         {/* CTA Button (Desktop only) */}
-//         <button className="hidden md:block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors">
-//           Get Started
-//         </button>
-
-//         {/* Mobile Menu Toggle */}
-//         <button
-//           className="md:hidden text-gray-700"
-//           onClick={() => setMenuOpen(!menuOpen)}
-//         >
-//           {menuOpen ? <X size={28} /> : <Menu size={28} />}
-//         </button>
-
-//         {/* Mobile Menu */}
-//         {menuOpen && (
-//           <div className="absolute top-full left-0 w-full bg-white shadow-md flex flex-col items-start p-6 md:hidden z-50">
-//             <a href="/" className="py-2 w-full hover:text-blue-600 transition-colors" onClick={() => setMenuOpen(false)}>Home</a>
-//             <a href="/about" className="py-2 w-full hover:text-blue-600 transition-colors" onClick={() => setMenuOpen(false)}>About</a>
-            
-//             {/* Mobile Properties Dropdown */}
-//             <div className="w-full">
-//               <button 
-//                 className="flex items-center justify-between w-full py-2 hover:text-blue-600 transition-colors"
-//                 onClick={() => setMobileDropdownOpen(!mobileDropdownOpen)}
-//               >
-//                 Properties
-//                 <svg 
-//                   className={`w-4 h-4 transition-transform ${mobileDropdownOpen ? 'rotate-180' : ''}`} 
-//                   fill="none" 
-//                   stroke="currentColor" 
-//                   strokeWidth="2" 
-//                   viewBox="0 0 24 24"
-//                 >
-//                   <path d="M19 9l-7 7-7-7" />
-//                 </svg>
-//               </button>
-              
-//               {mobileDropdownOpen && (
-//                 <div className="pl-4 mt-2 w-full border-l-2 border-blue-100">
-//                   <a
-//                     href="/properties/housing"
-//                     className="block py-2 hover:text-blue-600 text-gray-700 transition-colors"
-//                     onClick={() => {
-//                       setMobileDropdownOpen(false);
-//                       setMenuOpen(false);
-//                     }}
-//                   >
-//                     Housing
-//                   </a>
-//                   <a
-//                     href="/properties/lands"
-//                     className="block py-2 hover:text-blue-600 text-gray-700 transition-colors"
-//                     onClick={() => {
-//                       setMobileDropdownOpen(false);
-//                       setMenuOpen(false);
-//                     }}
-//                   >
-//                     Lands
-//                   </a>
-//                 </div>
-//               )}
-//             </div>
-            
-//             <a href="/contact" className="py-2 w-full hover:text-blue-600 transition-colors" onClick={() => setMenuOpen(false)}>Contact</a>
-//             <button className="mt-4 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors w-full">
-//               Get Started
-//             </button>
-//           </div>
-//         )}
-//       </header>
-
-//       {/* Hero Section with Sliding Background */}
-//       <section className="relative bg-gray-100 h-[500px] overflow-hidden">
-//         {/* Slides */}
-//         <div className="relative w-full h-full">
-//           {slides.map((slide, index) => (
-//             <div
-//               key={index}
-//               className={`absolute inset-0 transition-opacity duration-1000 ${
-//                 index === currentSlide ? "opacity-100" : "opacity-0"
-//               }`}
-//             >
-//               <img
-//                 src={slide.src}
-//                 alt={slide.alt}
-//                 className="w-full h-full object-cover"
-//               />
-//             </div>
-//           ))}
-//         </div>
-
-//         {/* Overlay */}
-//         <div className="absolute inset-0 bg-black/40 flex items-center justify-start">
-//           <div className="container px-6 text-white max-w-2xl text-left">
-            
-//             {/* Animated Heading */}
-//             <motion.h1
-//               initial={{ opacity: 0, y: 40 }}
-//               animate={{ opacity: 1, y: 0 }}
-//               transition={{ duration: 0.8, ease: "easeOut" }}
-//               className="text-4xl md:text-5xl font-bold mb-4"
-//             >
-//               Find Your Dream Home
-//             </motion.h1>
-
-//             {/* Animated Paragraph */}
-//             <motion.p
-//               initial={{ opacity: 0, y: 40 }}
-//               animate={{ opacity: 1, y: 0 }}
-//               transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-//               className="mb-6"
-//             >
-//               Discover the perfect property for your needs. From modern apartments to spacious family homes.
-//             </motion.p>
-
-//             {/* Animated Button */}
-//             <motion.a
-//               href="#"
-//               initial={{ opacity: 0, y: 40 }}
-//               animate={{ opacity: 1, y: 0 }}
-//               transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
-//               className="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-lg shadow-md transition-colors"
-//             >
-//               Get Started
-//             </motion.a>
-//           </div>
-//         </div>
-
-//         {/* Slide Indicators */}
-//         <div className="absolute bottom-6 left-0 right-0 flex justify-center space-x-2 z-10">
-//           {slides.map((_, index) => (
-//             <button
-//               key={index}
-//               className={`w-3 h-3 rounded-full transition-colors ${
-//                 index === currentSlide ? "bg-white" : "bg-white/50"
-//               }`}
-//               onClick={() => goToSlide(index)}
-//               aria-label={`Go to slide ${index + 1}`}
-//             />
-//           ))}
-//         </div>
-
-//         {/* Navigation Arrows */}
-//         <button
-//           className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/80 hover:text-white bg-black/30 p-2 rounded-full transition-colors"
-//           onClick={goToPrevSlide}
-//           aria-label="Previous slide"
-//         >
-//           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-//             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-//           </svg>
-//         </button>
-//         <button
-//           className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white/80 hover:text-white bg-black/30 p-2 rounded-full transition-colors"
-//           onClick={goToNextSlide}
-//           aria-label="Next slide"
-//         >
-//           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-//             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-//           </svg>
-//         </button>
-//       </section>
-
-//       {/* Featured Properties */}
-//       <section className="px-6 md:px-12 py-16 bg-white">
-//         <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">Featured Properties</h2>
-//         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
-//           {/* Property 1 */}
-//           <div className="shadow-md rounded-lg overflow-hidden transition-transform hover:scale-105">
-//             <Image
-//               src="/house1.jpg"
-//               alt="Property 1"
-//               width={400}
-//               height={300}
-//               className="w-full h-60 object-cover"
-//             />
-//             <div className="p-4">
-//               <h3 className="text-lg md:text-xl font-semibold">₦10,500,000</h3>
-//               <p className="text-gray-600">1234 Main St, Abeokuta, Ogun State, Nigeria</p>
-//               <p className="text-gray-500 text-sm mt-2">
-//                 Modern 3-bedroom apartment with stunning city views and amenities.
-//               </p>
-//             </div>
-//           </div>
-
-//           {/* Property 2 */}
-//           <div className="shadow-md rounded-lg overflow-hidden transition-transform hover:scale-105">
-//             <Image
-//               src="/house2.jpg"
-//               alt="Property 2"
-//               width={400}
-//               height={300}
-//               className="w-full h-60 object-cover"
-//             />
-//             <div className="p-4">
-//               <h3 className="text-lg md:text-xl font-semibold">₦12,750,000</h3>
-//               <p className="text-gray-600">5678 Orange Ave, Abeokuta, Ogun State, Nigeria</p>
-//               <p className="text-gray-500 text-sm mt-2">
-//                 Spacious family home with large garden and outdoor entertainment area.
-//               </p>
-//             </div>
-//           </div>
-
-//           {/* Property 3 */}
-//           <div className="shadow-md rounded-lg overflow-hidden transition-transform hover:scale-105">
-//             <Image
-//               src="/house3.jpg"
-//               alt="Property 3"
-//               width={400}
-//               height={300}
-//               className="w-full h-60 object-cover"
-//             />
-//             <div className="p-4">
-//               <h3 className="text-lg md:text-xl font-semibold">₦78,250,000</h3>
-//               <p className="text-gray-600">9101 Pine Rd, Fair Haven, Ogun State Nigeria</p>
-//               <p className="text-gray-500 text-sm mt-2">
-//                 Cozy cottage perfect for first-time home buyers or as a rental investment.
-//               </p>
-//             </div>
-//           </div>
-//         </div>
-        
-//         {/* Additional content to demonstrate sticky header */}
-//         <div className="mt-16">
-//           <h3 className="text-xl font-semibold mb-4">More Properties</h3>
-//           <div className="space-y-4">
-//             {[1, 2, 3, 4, 5].map((item) => (
-//               <div key={item} className="p-4 border rounded-lg">
-//                 <h4 className="font-medium">Property Listing {item}</h4>
-//                 <p className="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       </section>
-//     </div>
-//   );
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// "use client";
-// import { useState, useEffect, useRef } from "react";
-// import Image from "next/image";
-// import { Menu, X } from "lucide-react";
-// import { motion, AnimatePresence } from "framer-motion";
-
-// export default function Home() {
-//   const [menuOpen, setMenuOpen] = useState(false);
-//   const [dropdownOpen, setDropdownOpen] = useState(false);
-//   const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
-//   const [currentSlide, setCurrentSlide] = useState(0);
-//   const dropdownRef = useRef<HTMLDivElement>(null);
-//   const slideInterval = useRef<NodeJS.Timeout>();
-
-//   const slides = [
-//     {
-//       src: "/house1.jpg",
-//       alt: "Luxury Home",
-//       title: "Find Your Dream Home",
-//       description: "Discover the perfect property for your needs. From modern apartments to spacious family homes."
-//     },
-//     {
-//       src: "/house2.jpg",
-//       alt: "Modern Villa",
-//       title: "Premium Properties",
-//       description: "Explore our exclusive collection of luxury homes with premium amenities and locations."
-//     },
-//     {
-//       src: "/house3.jpg",
-//       alt: "Country House",
-//       title: "Investment Opportunities",
-//       description: "Smart real estate investments with great returns. Start building your property portfolio today."
-//     },
-//   ];
-
-//   // Close dropdown when clicking outside
-//   useEffect(() => {
-//     const handleClickOutside = (event: MouseEvent) => {
-//       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-//         setDropdownOpen(false);
-//       }
-//     };
-
-//     document.addEventListener("mousedown", handleClickOutside);
-//     return () => {
-//       document.removeEventListener("mousedown", handleClickOutside);
-//     };
-//   }, []);
-
-//   // Auto slide functionality
-//   useEffect(() => {
-//     const startSlideShow = () => {
-//       slideInterval.current = setInterval(() => {
-//         setCurrentSlide((prev) => (prev + 1) % slides.length);
-//       }, 5000);
-//     };
-
-//     const stopSlideShow = () => {
-//       if (slideInterval.current) {
-//         clearInterval(slideInterval.current);
-//       }
-//     };
-
-//     startSlideShow();
-
-//     // Clean up on component unmount
-//     return () => stopSlideShow();
-//   }, [slides.length]);
-
-//   const goToSlide = (index: number) => {
-//     setCurrentSlide(index);
-//   };
-
-//   const goToNextSlide = () => {
-//     setCurrentSlide((prev) => (prev + 1) % slides.length);
-//   };
-
-//   const goToPrevSlide = () => {
-//     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-//   };
-
-//   return (
-//     <div>
-//       {/* Sticky Navbar */}
-//       <header className="sticky top-0 z-50 flex items-center justify-between px-8 py-4 shadow-sm bg-white">
-//         {/* Logo */}
-//         <div className="flex items-center gap-2">
-//           <span className="text-2xl font-bold text-blue-900">🏠 ACEEstate</span>
-//         </div>
-
-//         {/* Desktop Nav */}
-//         <nav className="hidden md:flex gap-6 text-gray-700 relative">
-//           <a href="/" className="hover:text-blue-600 transition-colors">Home</a>
-//           <a href="/about" className="hover:text-blue-600 transition-colors">About</a>
-          
-//           {/* Properties Dropdown */}
-//           <div 
-//             className="relative" 
-//             ref={dropdownRef}
-//             onMouseEnter={() => setDropdownOpen(true)}
-//             onMouseLeave={() => setDropdownOpen(false)}
-//           >
-//             <button 
-//               className="flex items-center hover:text-green-600 focus:outline-none cursor-pointer select-none transition-colors"
-//               onClick={() => setDropdownOpen(!dropdownOpen)}
-//             >
-//               Properties
-//               <svg 
-//                 className={`w-4 h-4 ml-1 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} 
-//                 fill="none" 
-//                 stroke="currentColor" 
-//                 strokeWidth="2" 
-//                 viewBox="0 0 24 24"
-//               >
-//                 <path d="M19 9l-7 7-7-7" />
-//               </svg>
-//             </button>
-            
-//             {dropdownOpen && (
-//               <div 
-//                 className="absolute left-0 top-full w-48 bg-white shadow-lg rounded-md py-2 z-50 border border-gray-200"
-//                 onMouseEnter={() => setDropdownOpen(true)}
-//                 onMouseLeave={() => setDropdownOpen(false)}
-//               >
-//                 <a
-//                   href="/properties/housing"
-//                   className="block px-4 py-2 hover:bg-blue-50 text-gray-700 transition-colors"
-//                   onClick={() => setDropdownOpen(false)}
-//                 >
-//                   Housing
-//                 </a>
-//                 <a
-//                   href="/properties/lands"
-//                   className="block px-4 py-2 hover:bg-blue-50 text-gray-700 transition-colors"
-//                   onClick={() => setDropdownOpen(false)}
-//                 >
-//                   Lands
-//                 </a>
-//               </div>
-//             )}
-//           </div>
-
-//           <a href="/contact" className="hover:text-blue-600 transition-colors">Contact</a>
-//         </nav>
-
-//         {/* CTA Button (Desktop only) */}
-//         <button className="hidden md:block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors">
-//           Get Started
-//         </button>
-
-//         {/* Mobile Menu Toggle */}
-//         <button
-//           className="md:hidden text-gray-700"
-//           onClick={() => setMenuOpen(!menuOpen)}
-//         >
-//           {menuOpen ? <X size={28} /> : <Menu size={28} />}
-//         </button>
-
-//         {/* Mobile Menu */}
-//         {menuOpen && (
-//           <div className="absolute top-full left-0 w-full bg-white shadow-md flex flex-col items-start p-6 md:hidden z-50">
-//             <a href="/" className="py-2 w-full hover:text-blue-600 transition-colors" onClick={() => setMenuOpen(false)}>Home</a>
-//             <a href="/about" className="py-2 w-full hover:text-blue-600 transition-colors" onClick={() => setMenuOpen(false)}>About</a>
-            
-//             {/* Mobile Properties Dropdown */}
-//             <div className="w-full">
-//               <button 
-//                 className="flex items-center justify-between w-full py-2 hover:text-blue-600 transition-colors"
-//                 onClick={() => setMobileDropdownOpen(!mobileDropdownOpen)}
-//               >
-//                 Properties
-//                 <svg 
-//                   className={`w-4 h-4 transition-transform ${mobileDropdownOpen ? 'rotate-180' : ''}`} 
-//                   fill="none" 
-//                   stroke="currentColor" 
-//                   strokeWidth="2" 
-//                   viewBox="0 0 24 24"
-//                 >
-//                   <path d="M19 9l-7 7-7-7" />
-//                 </svg>
-//               </button>
-              
-//               {mobileDropdownOpen && (
-//                 <div className="pl-4 mt-2 w-full border-l-2 border-blue-100">
-//                   <a
-//                     href="/properties/housing"
-//                     className="block py-2 hover:text-blue-600 text-gray-700 transition-colors"
-//                     onClick={() => {
-//                       setMobileDropdownOpen(false);
-//                       setMenuOpen(false);
-//                     }}
-//                   >
-//                     Housing
-//                   </a>
-//                   <a
-//                     href="/properties/lands"
-//                     className="block py-2 hover:text-blue-600 text-gray-700 transition-colors"
-//                     onClick={() => {
-//                       setMobileDropdownOpen(false);
-//                       setMenuOpen(false);
-//                     }}
-//                   >
-//                     Lands
-//                   </a>
-//                 </div>
-//               )}
-//             </div>
-            
-//             <a href="/contact" className="py-2 w-full hover:text-blue-600 transition-colors" onClick={() => setMenuOpen(false)}>Contact</a>
-//             <button className="mt-4 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors w-full">
-//               Get Started
-//             </button>
-//           </div>
-//         )}
-//       </header>
-
-//       {/* Hero Section with Sliding Background */}
-//       <section className="relative bg-gray-100 h-[500px] overflow-hidden">
-//         {/* Slides */}
-//         <div className="relative w-full h-full">
-//           {slides.map((slide, index) => (
-//             <div
-//               key={index}
-//               className={`absolute inset-0 transition-opacity duration-1000 ${
-//                 index === currentSlide ? "opacity-100" : "opacity-0"
-//               }`}
-//             >
-//               <img
-//                 src={slide.src}
-//                 alt={slide.alt}
-//                 className="w-full h-full object-cover"
-//               />
-//             </div>
-//           ))}
-//         </div>
-
-//         {/* Overlay */}
-//         <div className="absolute inset-0 bg-black/40 flex items-center justify-start">
-//           <div className="container px-6 text-white max-w-2xl text-left">
-            
-//             {/* Animated Heading - Different for each slide */}
-//             <AnimatePresence mode="wait">
-//               <motion.h1
-//                 key={currentSlide}
-//                 initial={{ opacity: 0, y: 40 }}
-//                 animate={{ opacity: 1, y: 0 }}
-//                 exit={{ opacity: 0, y: -40 }}
-//                 transition={{ duration: 0.8, ease: "easeOut" }}
-//                 className="text-4xl md:text-5xl font-bold mb-4"
-//               >
-//                 {slides[currentSlide].title}
-//               </motion.h1>
-//             </AnimatePresence>
-
-//             {/* Animated Paragraph - Different for each slide */}
-//             <AnimatePresence mode="wait">
-//               <motion.p
-//                 key={currentSlide}
-//                 initial={{ opacity: 0, y: 40 }}
-//                 animate={{ opacity: 1, y: 0 }}
-//                 exit={{ opacity: 0, y: -40 }}
-//                 transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-//                 className="mb-6"
-//               >
-//                 {slides[currentSlide].description}
-//               </motion.p>
-//             </AnimatePresence>
-
-//             {/* CTA Button - Same for all slides */}
-//             <motion.a
-//               href="#"
-//               initial={{ opacity: 0, y: 40 }}
-//               animate={{ opacity: 1, y: 0 }}
-//               transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
-//               className="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-lg shadow-md transition-colors"
-//             >
-//               Get Started
-//             </motion.a>
-//           </div>
-//         </div>
-
-//         {/* Slide Indicators */}
-//         <div className="absolute bottom-6 left-0 right-0 flex justify-center space-x-2 z-10">
-//           {slides.map((_, index) => (
-//             <button
-//               key={index}
-//               className={`w-3 h-3 rounded-full transition-colors ${
-//                 index === currentSlide ? "bg-white" : "bg-white/50"
-//               }`}
-//               onClick={() => goToSlide(index)}
-//               aria-label={`Go to slide ${index + 1}`}
-//             />
-//           ))}
-//         </div>
-
-//         {/* Navigation Arrows */}
-//         <button
-//           className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/80 hover:text-white bg-black/30 p-2 rounded-full transition-colors"
-//           onClick={goToPrevSlide}
-//           aria-label="Previous slide"
-//         >
-//           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-//             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-//           </svg>
-//         </button>
-//         <button
-//           className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white/80 hover:text-white bg-black/30 p-2 rounded-full transition-colors"
-//           onClick={goToNextSlide}
-//           aria-label="Next slide"
-//         >
-//           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-//             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-//           </svg>
-//         </button>
-//       </section>
-
-//       {/* Featured Properties */}
-//       <section className="px-6 md:px-12 py-16 bg-white">
-//         <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">Featured Properties</h2>
-//         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
-//           {/* Property 1 */}
-//           <div className="shadow-md rounded-lg overflow-hidden transition-transform hover:scale-105">
-//             <Image
-//               src="/house1.jpg"
-//               alt="Property 1"
-//               width={400}
-//               height={300}
-//               className="w-full h-60 object-cover"
-//             />
-//             <div className="p-4">
-//               <h3 className="text-lg md:text-xl font-semibold">₦3,500,000</h3>
-//               <p className="text-gray-600">1234 Main St, Abeokuta, Ogun State, Nigeria</p>
-//               <p className="text-gray-500 text-sm mt-2">
-//                 Modern 3-bedroom apartment with stunning city views and amenities.
-//               </p>
-//             </div>
-//           </div>
-
-//           {/* Property 2 */}
-//           <div className="shadow-md rounded-lg overflow-hidden transition-transform hover:scale-105">
-//             <Image
-//               src="/house2.jpg"
-//               alt="Property 2"
-//               width={400}
-//               height={300}
-//               className="w-full h-60 object-cover"
-//             />
-//             <div className="p-4">
-//               <h3 className="text-lg md:text-xl font-semibold">₦2,750,000</h3>
-//               <p className="text-gray-600">5678 Orange Ave, Abeokuta, Ogun State, Nigeria</p>
-//               <p className="text-gray-500 text-sm mt-2">
-//                 Spacious family home with large garden and outdoor entertainment area.
-//               </p>
-//             </div>
-//           </div>
-
-//           {/* Property 3 */}
-//           <div className="shadow-md rounded-lg overflow-hidden transition-transform hover:scale-105">
-//             <Image
-//               src="/house3.jpg"
-//               alt="Property 3"
-//               width={400}
-//               height={300}
-//               className="w-full h-60 object-cover"
-//             />
-//             <div className="p-4">
-//               <h3 className="text-lg md:text-xl font-semibold">₦1,250,000</h3>
-//               <p className="text-gray-600">9101 Pine Rd, Fair Haven, Ogun State Nigeria</p>
-//               <p className="text-gray-500 text-sm mt-2">
-//                 Cozy cottage perfect for first-time home buyers or as a rental investment.
-//               </p>
-//             </div>
-//           </div>
-//         </div>
-        
-//         {/* Additional content to demonstrate sticky header */}
-//         <div className="mt-16">
-//           <h3 className="text-xl font-semibold mb-4">More Properties</h3>
-//           <div className="space-y-4">
-//             {[1, 2, 3, 4, 5].map((item) => (
-//               <div key={item} className="p-4 border rounded-lg">
-//                 <h4 className="font-medium">Property Listing {item}</h4>
-//                 <p className="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       </section>
-//     </div>
-//   );
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // app/page.tsx
 // "use client";
 // import { useState, useEffect, useRef } from "react";
 // import Image from "next/image";
@@ -824,18 +14,21 @@
 
 //   const slides = [
 //     {
+//       id: "slide-1",
 //       src: "/house1.jpg",
 //       alt: "Luxury Home",
 //       title: "Find Your Dream Home",
 //       description: "Discover the perfect property for your needs. From modern apartments to spacious family homes."
 //     },
 //     {
+//       id: "slide-2",
 //       src: "/house2.jpg",
 //       alt: "Modern Villa",
 //       title: "Premium Properties",
 //       description: "Explore our exclusive collection of luxury homes with premium amenities and locations."
 //     },
 //     {
+//       id: "slide-3",
 //       src: "/house3.jpg",
 //       alt: "Country House",
 //       title: "Investment Opportunities",
@@ -885,7 +78,7 @@
 //         <div className="relative w-full h-full">
 //           {slides.map((slide, index) => (
 //             <div
-//               key={index}
+//               key={slide.id} // Using unique ID instead of index
 //               className={`absolute inset-0 transition-opacity duration-1000 ${
 //                 index === currentSlide ? "opacity-100" : "opacity-0"
 //               }`}
@@ -905,7 +98,7 @@
             
 //             {/* Animated Heading - Different for each slide */}
 //             <motion.h1
-//               key={currentSlide}
+//               key={slides[currentSlide].id} // Using unique ID instead of index
 //               initial={{ opacity: 0, y: 40 }}
 //               animate={{ opacity: 1, y: 0 }}
 //               transition={{ duration: 0.8, ease: "easeOut" }}
@@ -916,7 +109,7 @@
 
 //             {/* Animated Paragraph - Different for each slide */}
 //             <motion.p
-//               key={currentSlide}
+//               key={`desc-${slides[currentSlide].id}`} // Using unique key with prefix
 //               initial={{ opacity: 0, y: 40 }}
 //               animate={{ opacity: 1, y: 0 }}
 //               transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
@@ -940,9 +133,9 @@
 
 //         {/* Slide Indicators */}
 //         <div className="absolute bottom-6 left-0 right-0 flex justify-center space-x-2 z-10">
-//           {slides.map((_, index) => (
+//           {slides.map((slide, index) => (
 //             <button
-//               key={index}
+//               key={`indicator-${slide.id}`} // Using unique key with prefix
 //               className={`w-3 h-3 rounded-full transition-colors ${
 //                 index === currentSlide ? "bg-white" : "bg-white/50"
 //               }`}
@@ -968,7 +161,7 @@
 //           aria-label="Next slide"
 //         >
 //           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-//             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+//             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7-7" />
 //           </svg>
 //         </button>
 //       </section>
@@ -978,7 +171,7 @@
 //         <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">Featured Properties</h2>
 //         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
 //           {/* Property 1 */}
-//           <div className="shadow-md rounded-lg overflow-hidden transition-transform hover:scale-105">
+//           <div key="property-1" className="shadow-md rounded-lg overflow-hidden transition-transform hover:scale-105">
 //             <Image
 //               src="/house1.jpg"
 //               alt="Property 1"
@@ -996,7 +189,7 @@
 //           </div>
 
 //           {/* Property 2 */}
-//           <div className="shadow-md rounded-lg overflow-hidden transition-transform hover:scale-105">
+//           <div key="property-2" className="shadow-md rounded-lg overflow-hidden transition-transform hover:scale-105">
 //             <Image
 //               src="/house2.jpg"
 //               alt="Property 2"
@@ -1014,7 +207,7 @@
 //           </div>
 
 //           {/* Property 3 */}
-//           <div className="shadow-md rounded-lg overflow-hidden transition-transform hover:scale-105">
+//           <div key="property-3" className="shadow-md rounded-lg overflow-hidden transition-transform hover:scale-105">
 //             <Image
 //               src="/house3.jpg"
 //               alt="Property 3"
@@ -1037,7 +230,7 @@
 //           <h3 className="text-xl font-semibold mb-4">More Properties</h3>
 //           <div className="space-y-4">
 //             {[1, 2, 3, 4, 5].map((item) => (
-//               <div key={item} className="p-4 border rounded-lg">
+//               <div key={`listing-${item}`} className="p-4 border rounded-lg"> {/* Added unique key with prefix */}
 //                 <h4 className="font-medium">Property Listing {item}</h4>
 //                 <p className="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
 //               </div>
@@ -1070,7 +263,7 @@
 
 
 
-
+// app/page.tsx
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
@@ -1104,6 +297,57 @@ export default function Home() {
       title: "Investment Opportunities",
       description: "Smart real estate investments with great returns. Start building your property portfolio today."
     },
+  ];
+
+  const moreProperties = [
+    {
+      id: 4,
+      title: "Luxury Apartment",
+      price: "₦420,200,000",
+      location: "Victoria Island, Lagos",
+      image: "/house4.jpg",
+      description: "Modern luxury apartment with premium finishes and amenities in a prime location."
+    },
+    {
+      id: 5,
+      title: "Beachfront Home",
+      price: "₦770,800,000",
+      location: "Ikeja, Lagos",
+      image: "/house5.jpg",
+      description: "Spacious beachfront home with a spacious parking space and modern amenities for comfortable living."
+    },
+    {
+      id: 6,
+      title: "Beach House",
+      price: "₦950,500,000",
+      location: "Epe, Lagos",
+      image: "/house6.jpg",
+      description: "Beautiful beachfront property with stunning ocean views and direct beach access."
+    },
+    {
+      id: 7,
+      title: "Townhouse",
+      price: "₦130,900,000",
+      location: "Surulere, Lagos",
+      image: "/house1.jpg",
+      description: "Modern townhouse in a convenient urban location with easy access to amenities."
+    },
+    {
+      id: 8,
+      title: "Duplex",
+      price: "₦190,200,000",
+      location: "GRA, Ibadan",
+      image: "/house2.jpg",
+      description: "Elegant duplex with spacious rooms and modern design features throughout."
+    },
+    {
+      id: 9,
+      title: "Modern Duplex",
+      price: "₦480,800,000",
+      location: "Abeokuta, Ogun State",
+      image: "/house3.jpg",
+      description: "Charming bungalow with character and ample outdoor space for relaxation."
+    }
   ];
 
   // Auto slide functionality
@@ -1148,8 +392,8 @@ export default function Home() {
         <div className="relative w-full h-full">
           {slides.map((slide, index) => (
             <div
-              key={slide.id} // Using unique ID instead of index
-              className={`absolute inset-0 transition-opacity duration-1000 ${
+              key={slide.id}
+              className={`absolute inset-极 transition-opacity duration-1000 ${
                 index === currentSlide ? "opacity-100" : "opacity-0"
               }`}
             >
@@ -1168,7 +412,7 @@ export default function Home() {
             
             {/* Animated Heading - Different for each slide */}
             <motion.h1
-              key={slides[currentSlide].id} // Using unique ID instead of index
+              key={slides[currentSlide].id}
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
@@ -1179,7 +423,7 @@ export default function Home() {
 
             {/* Animated Paragraph - Different for each slide */}
             <motion.p
-              key={`desc-${slides[currentSlide].id}`} // Using unique key with prefix
+              key={`desc-${slides[currentSlide].id}`}
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
@@ -1194,7 +438,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
-              className="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-lg shadow-md transition-colors"
+              className="inline-block bg-green-600 hover极bg-green-700 text-white font-semibold px-6 py-3 rounded-lg shadow-md transition-colors"
             >
               Get Started
             </motion.a>
@@ -1202,10 +446,10 @@ export default function Home() {
         </div>
 
         {/* Slide Indicators */}
-        <div className="absolute bottom-6 left-0 right-0 flex justify-center space-x-2 z-10">
+        <div className="absolute bottom-6 left-0 right-0 flex justify-center space极-2 z-10">
           {slides.map((slide, index) => (
             <button
-              key={`indicator-${slide.id}`} // Using unique key with prefix
+              key={`indicator-${slide.id}`}
               className={`w-3 h-3 rounded-full transition-colors ${
                 index === currentSlide ? "bg-white" : "bg-white/50"
               }`}
@@ -1250,7 +494,7 @@ export default function Home() {
               className="w-full h-60 object-cover"
             />
             <div className="p-4">
-              <h3 className="text-lg md:text-xl font-semibold">₦3,500,000</h3>
+              <h3 className="text-lg md:text-xl font-semibold">₦130,500,000</h3>
               <p className="text-gray-600">1234 Main St, Abeokuta, Ogun State, Nigeria</p>
               <p className="text-gray-500 text-sm mt-2">
                 Modern 3-bedroom apartment with stunning city views and amenities.
@@ -1268,7 +512,7 @@ export default function Home() {
               className="w-full h-60 object-cover"
             />
             <div className="p-4">
-              <h3 className="text-lg md:text-xl font-semibold">₦2,750,000</h3>
+              <h3 className="text-lg md:text-xl font-semibold">₦210,750,000</h3>
               <p className="text-gray-600">5678 Orange Ave, Abeokuta, Ogun State, Nigeria</p>
               <p className="text-gray-500 text-sm mt-2">
                 Spacious family home with large garden and outdoor entertainment area.
@@ -1286,7 +530,7 @@ export default function Home() {
               className="w-full h-60 object-cover"
             />
             <div className="p-4">
-              <h3 className="text-lg md:text-xl font-semibold">₦1,250,000</h3>
+              <h3 className="text-lg md:text-xl font-semibold">₦450,250,000</h3>
               <p className="text-gray-600">9101 Pine Rd, Fair Haven, Ogun State Nigeria</p>
               <p className="text-gray-500 text-sm mt-2">
                 Cozy cottage perfect for first-time home buyers or as a rental investment.
@@ -1295,17 +539,71 @@ export default function Home() {
           </div>
         </div>
         
-        {/* Additional content to demonstrate sticky header */}
+        {/* More Properties Section - Updated to Cards */}
         <div className="mt-16">
-          <h3 className="text-xl font-semibold mb-4">More Properties</h3>
-          <div className="space-y-4">
-            {[1, 2, 3, 4, 5].map((item) => (
-              <div key={`listing-${item}`} className="p-4 border rounded-lg"> {/* Added unique key with prefix */}
-                <h4 className="font-medium">Property Listing {item}</h4>
-                <p className="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
-              </div>
+          <motion.h3 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-8"
+          >
+            More Properties
+          </motion.h3>
+          
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.1
+                }
+              }
+            }}
+            className="grid sm:grid-cols-2 md:grid-cols-3 gap-6"
+          >
+            {moreProperties.map((property) => (
+              <motion.div
+                key={property.id}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+                }}
+                className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="h-48 relative">
+                  <Image
+                    src={property.image}
+                    alt={property.title}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute top-3 right-3 bg-blue-600 text-white px-2 py-1 rounded text-xs font-semibold">
+                    New
+                  </div>
+                </div>
+                <div className="p-4">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-1">{property.title}</h3>
+                  <p className="text-blue-600 font-bold mb-2">{property.price}</p>
+                  <p className="text-gray-600 text-sm mb-3 flex items-center">
+                    <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    {property.location}
+                  </p>
+                  <p className="text-gray-500 text-sm">{property.description}</p>
+                  <a href="/properties/housing"><button className="mt-4 w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-md transition-colors text-sm">
+                    View Details
+                  </button></a>
+                </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
