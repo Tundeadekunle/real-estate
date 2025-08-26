@@ -607,6 +607,117 @@ export default function Home() {
         </div>
       </section>
 
+// Add this section to your existing home page (app/page.tsx)
+
+// After the More Properties section and before the Footer, add:
+
+{/* Testimonials Section */}
+<section className="py-16 px-4 md:px-8 bg-gray-50">
+  <div className="container mx-auto max-w-6xl">
+    <motion.h2 
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.7 }}
+      className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4"
+    >
+      What Our Clients Say
+    </motion.h2>
+    <motion.p 
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.7, delay: 0.3 }}
+      className="text-center text-gray-600 max-w-2xl mx-auto mb-12"
+    >
+      Don't just take our word for it. Here's what our satisfied clients have to say about their experience with ACEEstate.
+    </motion.p>
+    
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {[
+        {
+          id: 1,
+          name: "Adeola Johnson",
+          role: "Home Owner",
+          image: "/testimonial1.jpg",
+          content: "ACEEstate helped me find my dream home in just two weeks! Their team was professional, responsive, and truly understood what I was looking for. I couldn't be happier with my new place.",
+          rating: 5
+        },
+        {
+          id: 2,
+          name: "Chinedu Okoro",
+          role: "Property Investor",
+          image: "/testimonial2.jpg",
+          content: "As a real estate investor, I've worked with many agencies, but ACEEstate stands out. Their market knowledge and negotiation skills helped me secure a great investment property at an excellent price.",
+          rating: 5
+        },
+        {
+          id: 3,
+          name: "Funmi Adebayo",
+          role: "First-time Buyer",
+          image: "/testimonial3.jpg",
+          content: "The process of buying my first home was made so easy by the ACEEstate team. They guided me through every step and answered all my questions patiently. Highly recommended!",
+          rating: 5
+        }
+      ].map((testimonial, index) => (
+        <motion.div
+          key={testimonial.id}
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: index * 0.2 }}
+          className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+        >
+          {/* Rating Stars */}
+          <div className="flex mb-4">
+            {[...Array(testimonial.rating)].map((_, i) => (
+              <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            ))}
+          </div>
+          
+          {/* Testimonial Content */}
+          <p className="text-gray-600 italic mb-6">"{testimonial.content}"</p>
+          
+          {/* Client Info */}
+          <div className="flex items-center">
+            <div className="w-12 h-12 bg-gray-300 rounded-full mr-4 overflow-hidden">
+              <img 
+                src={testimonial.image} 
+                alt={testimonial.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div>
+              <h4 className="font-semibold text-gray-800">{testimonial.name}</h4>
+              <p className="text-gray-600 text-sm">{testimonial.role}</p>
+            </div>
+          </div>
+        </motion.div>
+      ))}
+    </div>
+
+    {/* CTA for testimonials */}
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.7, delay: 0.5 }}
+      className="text-center mt-12"
+    >
+      <p className="text-gray-600 mb-6">Want to share your experience with ACEEstate?</p>
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors"
+      >
+        Share Your Story
+      </motion.button>
+    </motion.div>
+  </div>
+</section>
+
       <Footer />
     </div>
   );
