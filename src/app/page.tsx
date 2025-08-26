@@ -637,17 +637,17 @@ export default function Home() {
       {[
         {
           id: 1,
-          name: "Adeola Johnson",
+          name: "Adewale Babajide",
           role: "Home Owner",
-          image: "/testimonial1.jpg",
+          image: "/guy3.jpeg",
           content: "ACEEstate helped me find my dream home in just two weeks! Their team was professional, responsive, and truly understood what I was looking for. I couldn't be happier with my new place.",
           rating: 5
         },
         {
           id: 2,
-          name: "Chinedu Okoro",
+          name: "Uche Austin",
           role: "Property Investor",
-          image: "/testimonial2.jpg",
+          image: "/guy2.jpeg",
           content: "As a real estate investor, I've worked with many agencies, but ACEEstate stands out. Their market knowledge and negotiation skills helped me secure a great investment property at an excellent price.",
           rating: 5
         },
@@ -655,7 +655,7 @@ export default function Home() {
           id: 3,
           name: "Funmi Adebayo",
           role: "First-time Buyer",
-          image: "/testimonial3.jpg",
+          image: "/woman1.jpeg",
           content: "The process of buying my first home was made so easy by the ACEEstate team. They guided me through every step and answered all my questions patiently. Highly recommended!",
           rating: 5
         }
