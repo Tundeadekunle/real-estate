@@ -273,7 +273,8 @@ import Footer from "../components/Footer";
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const slideInterval = useRef<NodeJS.Timeout>();
+  const slideInterval = useRef<NodeJS.Timeout | null>(null);
+  // const slideInterval = useRef<NodeJS.Timeout>();
 
   const slides = [
     {
@@ -607,9 +608,9 @@ export default function Home() {
         </div>
       </section>
 
-// Add this section to your existing home page (app/page.tsx)
+{/* // Add this section to your existing home page (app/page.tsx)
 
-// After the More Properties section and before the Footer, add:
+// After the More Properties section and before the Footer, add: */}
 
 {/* Testimonials Section */}
 <section className="py-16 px-4 md:px-8 bg-gray-50">
