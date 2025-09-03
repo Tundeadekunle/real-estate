@@ -48,7 +48,7 @@ import "./globals.css";
 import WhatsAppChat from "../components/WhatsAppChat";
 
 export const metadata: Metadata = {
-  title: "ACE Real Estate",
+  title: "IAS Unique Homes",
   description: "Trusted Real Estate in Abeokuta, ACE Real Estate",
 };
 
