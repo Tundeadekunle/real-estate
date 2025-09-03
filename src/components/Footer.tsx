@@ -5,7 +5,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="bg-gray-900 text-white py-12">
+    <footer className="bg-orange-500 text-white py-12">
       <div className="container mx-auto px-4 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
@@ -16,7 +16,7 @@ export default function Footer() {
             transition={{ duration: 0.5 }}
             className="col-span-1 md:col-span-2"
           >
-            <h3 className="text-2xl font-bold mb-4">🏠 ACEEstate</h3>
+            <h3 className="text-2xl font-bold mb-4">🏠 IAS Unique Homes & Properties</h3>
             <p className="text-gray-400 mb-4">
               Your trusted partner in finding the perfect property. We specialize in residential 
               and commercial properties across Nigeria.
@@ -87,7 +87,7 @@ export default function Footer() {
                 <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                <span>info@aceestate.com</span>
+                <span>info@iasuniquehomes.com</span>
               </li>
             </ul>
           </motion.div>
@@ -101,7 +101,7 @@ export default function Footer() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400"
         >
-          <p>© {currentYear} ACEEstate. All rights reserved.</p>
+          <p>© {currentYear} IAS Unique Homes & Properties. All rights reserved.</p>
         </motion.div>
       </div>
     </footer>

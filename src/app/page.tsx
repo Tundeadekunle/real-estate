@@ -279,21 +279,21 @@ export default function Home() {
   const slides = [
     {
       id: "slide-1",
-      src: "/house1.jpg",
+      src: "/house2.jpg",
       alt: "Luxury Home",
       title: "Find Your Dream Home",
       description: "Discover the perfect property for your needs. From modern apartments to spacious family homes."
     },
     {
       id: "slide-2",
-      src: "/house2.jpg",
+      src: "/house6.jpg",
       alt: "Modern Villa",
       title: "Premium Properties",
       description: "Explore our exclusive collection of luxury homes with premium amenities and locations."
     },
     {
       id: "slide-3",
-      src: "/house3.jpg",
+      src: "/house5.jpg",
       alt: "Country House",
       title: "Investment Opportunities",
       description: "Smart real estate investments with great returns. Start building your property portfolio today."
@@ -394,7 +394,7 @@ export default function Home() {
           {slides.map((slide, index) => (
             <div
               key={slide.id}
-              className={`absolute inset-极 transition-opacity duration-1000 ${
+              className={`absolute inset-0 transition-opacity duration-1000 ${
                 index === currentSlide ? "opacity-100" : "opacity-0"
               }`}
             >
@@ -439,7 +439,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
-              className="inline-block bg-green-600 hover极bg-green-700 text-white font-semibold px-6 py-3 rounded-lg shadow-md transition-colors"
+              className="inline-block bg-blue-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-lg shadow-md transition-colors"
             >
               Get Started
             </motion.a>
@@ -447,7 +447,7 @@ export default function Home() {
         </div>
 
         {/* Slide Indicators */}
-        <div className="absolute bottom-6 left-0 right-0 flex justify-center space极-2 z-10">
+        <div className="absolute bottom-6 left-0 right-0 flex justify-center space-2 z-10">
           {slides.map((slide, index) => (
             <button
               key={`indicator-${slide.id}`}
@@ -598,7 +598,7 @@ export default function Home() {
                     {property.location}
                   </p>
                   <p className="text-gray-500 text-sm">{property.description}</p>
-                  <a href="/properties/housing"><button className="mt-4 w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-md transition-colors text-sm">
+                  <a href="/properties/housing"><button className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition-colors text-sm">
                     View Details
                   </button></a>
                 </div>

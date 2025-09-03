@@ -24,16 +24,16 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 flex items-center justify-between px-8 py-4 shadow-sm bg-white">
+    <header className="sticky top-0 z-50 flex items-center justify-between px-8 py-4 shadow-sm bg-blue-500">
       {/* Logo */}
       <div className="flex items-center gap-2">
-        <span className="text-2xl font-bold text-blue-900">🏠 ACEEstate</span>
+        <span className="text-2xl font-bold text-orange-500">🏠 IASUnique Homes</span>
       </div>
 
       {/* Desktop Nav */}
-      <nav className="hidden md:flex gap-6 text-gray-700 relative">
-        <a href="/" className="hover:text-blue-600 transition-colors">Home</a>
-        <a href="/about" className="hover:text-blue-600 transition-colors">About</a>
+      <nav className="hidden md:flex gap-6 text-white text-xl relative">
+        <a href="/" className="hover:text-orange-500 transition-colors">Home</a>
+        <a href="/about" className="hover:text-orange-500 transition-colors">About</a>
         
         {/* Properties Dropdown */}
         <div 
@@ -43,7 +43,7 @@ export default function Header() {
           onMouseLeave={() => setDropdownOpen(false)}
         >
           <button 
-            className="flex items-center hover:text-blue-600 focus:outline-none cursor-pointer select-none transition-colors"
+            className="flex items-center hover:text-orange-500 focus:outline-none cursor-pointer select-none transition-colors"
             onClick={() => setDropdownOpen(!dropdownOpen)}
           >
             Properties
@@ -66,14 +66,14 @@ export default function Header() {
             >
               <a
                 href="/properties/housing"
-                className="block px-4 py-2 hover:bg-blue-50 text-gray-700 transition-colors"
+                className="block px-4 py-2 hover:text-orange-500 hover:bg-blue-50 text-gray-700 transition-colors"
                 onClick={() => setDropdownOpen(false)}
               >
                 Housing
               </a>
               <a
                 href="/properties/lands"
-                className="block px-4 py-2 hover:bg-blue-50 text-gray-700 transition-colors"
+                className="block px-4 py-2 hover:text-orange-500 hover:bg-blue-50 text-gray-700 transition-colors"
                 onClick={() => setDropdownOpen(false)}
               >
                 Lands
@@ -82,11 +82,11 @@ export default function Header() {
           )}
         </div>
 
-        <a href="/contact" className="hover:text-blue-600 transition-colors">Contact</a>
+        <a href="/contact" className="hover:text-orange-500 transition-colors">Contact</a>
       </nav>
 
       {/* CTA Button (Desktop only) */}
-      <button className="hidden md:block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors">
+      <button className="hidden md:block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-orange-500 transition-colors">
         Get Started
       </button>
 
@@ -100,14 +100,14 @@ export default function Header() {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="absolute top-full left-0 w-full bg-white shadow-md flex flex-col items-start p-6 md:hidden z-50">
-          <a href="/" className="py-2 w-full hover:text-blue-600 transition-colors" onClick={() => setMenuOpen(false)}>Home</a>
-          <a href="/about" className="py-2 w-full hover:text-blue-600 transition-colors" onClick={() => setMenuOpen(false)}>About</a>
+        <div className="absolute top-full left-0 w-full bg-blue-500 shadow-md flex flex-col items-start p-6 md:hidden z-50">
+          <a href="/" className="py-2 w-full text-white hover:text-orange-500 transition-colors" onClick={() => setMenuOpen(false)}>Home</a>
+          <a href="/about" className="py-2 w-full text-white hover:text-orange-500 transition-colors" onClick={() => setMenuOpen(false)}>About</a>
           
           {/* Mobile Properties Dropdown */}
           <div className="w-full">
             <button 
-              className="flex items-center justify-between w-full py-2 hover:text-blue-600 transition-colors"
+              className="flex items-center justify-between w-full text-white py-2 hover:text-orange-500 transition-colors"
               onClick={() => setMobileDropdownOpen(!mobileDropdownOpen)}
             >
               Properties
@@ -126,7 +126,7 @@ export default function Header() {
               <div className="pl-4 mt-2 w-full border-l-2 border-blue-100">
                 <a
                   href="/properties/housing"
-                  className="block py-2 hover:text-blue-600 text-gray-700 transition-colors"
+                  className="block py-2 hover:text-orange-500 text-gray-700 transition-colors"
                   onClick={() => {
                     setMobileDropdownOpen(false);
                     setMenuOpen(false);
@@ -136,7 +136,7 @@ export default function Header() {
                 </a>
                 <a
                   href="/properties/lands"
-                  className="block py-2 hover:text-blue-600 text-gray-700 transition-colors"
+                  className="block py-2 hover:text-orange-500 text-gray-700 transition-colors"
                   onClick={() => {
                     setMobileDropdownOpen(false);
                     setMenuOpen(false);
@@ -148,8 +148,8 @@ export default function Header() {
             )}
           </div>
           
-          <a href="/contact" className="py-2 w-full hover:text-blue-600 transition-colors" onClick={() => setMenuOpen(false)}>Contact</a>
-          <button className="mt-4 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors w-full">
+          <a href="/contact" className="py-2 w-full text-white hover:text-orange-500 transition-colors" onClick={() => setMenuOpen(false)}>Contact</a>
+          <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-orange-500 transition-colors w-full">
             Get Started
           </button>
         </div>
